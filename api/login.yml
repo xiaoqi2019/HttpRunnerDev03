@@ -1,0 +1,41 @@
+# 所有的用例以及用例数据都存放在ymal或者json格式的配置文件中
+# name区域：来定义接口名称
+name: "登陆接口-正向用例"
+# base_url区域：定义base_url
+base_url: http://localhost:9000
+# variables区域：创建全局变量
+variables:
+    var1: qiqi
+    var2: "123456"
+    port: 9000
+request:
+    url: /user/login/
+    method: POST
+    headers:
+        Content-Type: "application/json"
+        User-Agent: ${get_user_agent()}
+#        User-Agent: "Mozilla/5.0 Summer"
+    # json传参--对应 Content-Type: "application/json"
+    json:
+        username: $var1 # 调用variables区域的全局变量
+        password: $var2
+#        username: ${ENV(USERNAME)} # 调用环境变量
+#        password: ${ENV(PASSWORD)}
+    # www-from表单传参
+#    data:
+#        username: "qimingxia"
+#        password: "qimingxia520"
+    # 传查询字符串参数
+#    params:
+#        name: "qiqi"
+#        age: 17
+# 断言
+validate:
+    # eq 断言类型 [断言key, 断言key值]
+    # 其他断言 lt小于：less than;
+    # lq 小于等于 ：less equals
+    # contains： 断言包含
+    - eq: ["status_code", 200] # 断言格式1
+    - {"check": "content.username", "comparator":"contains", "expect":"qiqi"} # 断言格式2
+#    - {"check":"headers.Content-Type", "comparator":"contains", "expect":"json"} # 断言key写法
+
