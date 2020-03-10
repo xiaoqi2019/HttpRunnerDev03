@@ -29,6 +29,7 @@ request:
 #    params:
 #        name: "qiqi"
 #        age: 17
+
 # 断言
 validate:
     # eq 断言类型 [断言key, 断言key值]
