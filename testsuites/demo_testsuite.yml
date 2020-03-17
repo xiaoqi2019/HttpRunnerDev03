@@ -1,18 +1,27 @@
-
+# 此区域添加多个用例之间的全局配置信息
 config:
-    name: "demo testsuite"
-    variables:
-        device_sn: "XYZ"
-    base_url: "http://127.0.0.1:5000"
+    name: "接口测试套件"
+    base_url: "http://localhost:9000"
 
+# 此区域加载用例，进行数据驱动测试
 testcases:
 -
-    name: call demo_testcase with data 1
-    testcase: path/to/demo_testcase.yml
-    variables:
-        device_sn: $device_sn
--
-    name: call demo_testcase with data 2
-    testcase: path/to/demo_testcase.yml
-    variables:
-        device_sn: $device_sn
+    name: 登录接口测试
+    testcase: testcases/login.yml
+    parameters:
+        # 方式3：
+        - title-username-password-status_code-contain_msg: ${get_accounts()}
+        # 方式1：
+        # 一条用例拥有一组数据集
+#         - title-username-password-status_code-contain_msg:
+#               - ["正常登陆", "xingchen", "123456", 200, "token"]
+#               - ["密码错误", "xingchen", "12345", 400, "non_field_errors"]
+#               - ["账号错误", "xingchen1", "123456", 400, "non_field_errors"]
+#               - ["用户名为空", " ", "123456", 400, "username"]
+#               - ["密码为空", "xingchen", " ", 400, "password"]
+        # 方式2：需要setup， teardown转化状态码为整型
+#        - title-username-password-status_code-contain_msg: ${P(datas/accounts.txt)}
+
+
+
+
