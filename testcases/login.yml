@@ -1,0 +1,12 @@
+# 1.此区域下：定义下面所有步骤得全局配置信息
+config:
+    name: "登录接口测试"
+    base_url: "http://127.0.0.1:9000"
+
+teststeps:
+-
+    name: $title
+    api: api/login.yml
+    validate:
+        - {"check": "content", "comparator":"contains", "expect": "$contain_msg"} # 变量是否加引号都可以
+        - {"check": "status_code", "comparator":"eq", "expect": $status_code}
